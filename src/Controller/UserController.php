@@ -29,14 +29,16 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
-//            $password = $this->get('security.password_hasher')->hash($user, $user->getPassword());
             $password = $passwordHasher->hashPassword(
                 $user,
-                $user->getPassword()
+                $form->get('password')->getData()
             );
             $user->setPassword($password);
+            $user->setCreatedAt(new \DateTimeImmutable());
 
             $em->persist($user);
             $em->flush();
@@ -52,14 +54,17 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(User $user, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );;
             $user->setPassword($password);
 
             $this->getDoctrine()->getManager()->flush();
