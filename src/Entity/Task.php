@@ -3,47 +3,43 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
- * @ORM\Table
- */
+#[ORM\Entity(repositoryClass: 'App\Repository\TaskRepository')]
+#[ORM\Table(name: 'task')]
 class Task
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
+    #[
+        ORM\Column(type: 'integer'),
+        ORM\Id,
+        ORM\GeneratedValue(strategy: 'AUTO')
+    ]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Vous devez saisir un titre.")
-     */
-    private $title;
+    #[ORM\Column(type: 'datetime')]
+    private \Datetime $createdAt;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Vous devez saisir du contenu.")
-     */
-    private $content;
+    #[
+        Assert\NotBlank(message: 'Vous devez saisir un titre.'),
+        ORM\Column(type: 'string')
+    ]
+    private string $title;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDone;
+    #[
+        ORM\Column(type: 'text'),
+        Assert\NotBlank(message: 'Vous devez saisir du contenu.')
+    ]
+    private string $content;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\Column(type: 'boolean')]
+    private bool $isDone;
+
+    #[
+        ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks'),
+        ORM\JoinColumn(nullable: false)
+    ]
     private $user;
 
     public function __construct()
@@ -52,12 +48,12 @@ class Task
         $this->isDone = false;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \Datetime
     {
         return $this->createdAt;
     }
@@ -67,7 +63,7 @@ class Task
         $this->createdAt = $createdAt;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -77,7 +73,7 @@ class Task
         $this->title = $title;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -87,7 +83,7 @@ class Task
         $this->content = $content;
     }
 
-    public function isDone()
+    public function isDone(): bool
     {
         return $this->isDone;
     }
