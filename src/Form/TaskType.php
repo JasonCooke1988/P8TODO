@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -13,15 +14,14 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content', TextareaType::class)
-            //->add('author') ===> must be the user authenticated
-        ;
+            ->add('content', TextareaType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => ['edit','create']
+            'validation_groups' => ['edit','create'],
+            'data_class' => Task::class
         ]);
     }
 }

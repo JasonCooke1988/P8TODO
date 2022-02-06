@@ -7,8 +7,13 @@
 {% block body %}
 
     <div class="row">
-        <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
-        <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
-        <a href="" class="btn btn-secondary">Consulter la liste des tâches terminées</a>
+        <div class="d-flex">
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('task_create') }}" class="btn btn-success mx-2">Créer une nouvelle tâche</a>
+            {% endif %}
+            <a href="{{ path('task_list') }}" class="btn btn-info mx-2">Consulter la liste des tâches à faire</a>
+            <a href="{{ path('task_done_list') }}" class="btn btn-secondary mx-2">Consulter la liste des tâches
+                terminées</a>
+        </div>
     </div>
 {% endblock %}
