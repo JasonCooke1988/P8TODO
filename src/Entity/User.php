@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[
         ORM\Column(type: 'string', length: 25, unique: true),
-        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.')
+        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.', groups: ['create','edit'])
     ]
     private string $username;
 
@@ -37,8 +37,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[
         ORM\Column(type: 'string', length: 60, unique: true),
-        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.'),
-        Assert\Email(message: 'Le format de l\'adresse n\'est pas correcte.')
+        Assert\NotBlank(message: 'Vous devez saisir un adresse email.', groups: ['create','edit']),
+        Assert\Email(message: 'Le format de l\'adresse n\'est pas correcte.', groups: ['create','edit'])
     ]
     private string $email;
 

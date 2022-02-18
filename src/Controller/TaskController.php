@@ -34,10 +34,10 @@ class TaskController extends AbstractController
     public function createAction(ManagerRegistry $managerRegistry, Request $request): RedirectResponse|Response
     {
         $task = new Task();
+        $user = $this->getUser();
+        $task->setUser($user);
 
         $this->denyAccessUnlessGranted('create', $task);
-
-        $user = $this->getUser();
 
         $form = $this->createForm(TaskType::class, $task, [
             'validation_groups' => ['create']
@@ -52,7 +52,7 @@ class TaskController extends AbstractController
             $em->persist($task);
             $em->flush();
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
         }
@@ -68,6 +68,23 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class, $task, [
             'validation_groups' => ['edit']
         ]);
+
+
+//        try {
+//            $form->handleRequest($request);
+//        } catch (\TypeError) {
+//
+//            $errors = array();
+//            foreach ($form as $fieldName => $formField) {
+//                $errors[$fieldName] = $formField->getErrors(true);
+//                dd($errors[$fieldName]);
+//                if ($errors[$fieldName] != "") {
+//                    $this->addFlash('error', str_replace('ERROR: ', '', $errors[$fieldName]));
+//                }
+//            }
+//
+//            return $this->redirectToRoute('task_edit',array('id' => $task->getId()));
+//        }
 
         $form->handleRequest($request);
 

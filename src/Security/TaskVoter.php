@@ -21,7 +21,7 @@ class TaskVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::DELETE, self::EDIT])) {
+        if (!in_array($attribute, [self::DELETE, self::EDIT, self::CREATE,  self::TOGGLE])) {
             return false;
         }
 
@@ -53,7 +53,7 @@ class TaskVoter extends Voter
         switch ($attribute) {
             case self::DELETE || self::EDIT:
                 return $this->canEdit($task, $user);
-            case self::CREATE ||self::TOGGLE:
+            case self::CREATE || self::TOGGLE:
                 return $user instanceof User;
         }
 
