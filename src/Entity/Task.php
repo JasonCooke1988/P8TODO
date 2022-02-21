@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: 'App\Repository\TaskRepository')]
@@ -22,16 +21,16 @@ class Task
     private \Datetime $createdAt;
 
     #[
-        Assert\NotBlank(message: 'Vous devez saisir un titre.'),
-        ORM\Column(type: 'string')
+        ORM\Column(type: 'string'),
+        Assert\NotBlank(message: 'Vous devez saisir un titre.', groups: ['create', 'edit'])
     ]
-    private string $title;
+    private ?string $title;
 
     #[
         ORM\Column(type: 'text'),
-        Assert\NotBlank(message: 'Vous devez saisir du contenu.')
+        Assert\NotBlank(message: 'Vous devez saisir du contenu.', groups: ['create', 'edit'])
     ]
-    private string $content;
+    private ?string $content;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isDone;
@@ -40,7 +39,7 @@ class Task
         ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks'),
         ORM\JoinColumn(nullable: false)
     ]
-    private $user;
+    private ?User $user;
 
     public function __construct()
     {
@@ -58,9 +57,11 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function getTitle(): string
@@ -68,9 +69,11 @@ class Task
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getContent(): string
@@ -78,9 +81,11 @@ class Task
         return $this->content;
     }
 
-    public function setContent($content)
+    public function setContent(?string $content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
     public function isDone(): bool

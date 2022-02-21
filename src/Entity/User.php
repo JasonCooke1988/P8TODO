@@ -5,17 +5,18 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use JetBrains\PhpStorm\Pure;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Table('user')]
-#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
-#[UniqueEntity('email')]
+#[
+    ORM\Table('user'),
+    ORM\Entity(repositoryClass: 'App\Repository\UserRepository'),
+    UniqueEntity(fields: 'email', message: 'Cet adresse email est déjà pris.', groups: ['create','edit']),
+    UniqueEntity(fields: 'username', message: 'Ce nom d\'utilisateur est déjà pris.', groups: ['create','edit'])
+]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
@@ -28,19 +29,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[
         ORM\Column(type: 'string', length: 25, unique: true),
-        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.')
+        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.', groups: ['create','edit']),
     ]
-    private string $username;
+    private ?string $username;
 
-    #[ORM\Column(type: 'string', length: 64)]
+    #[
+        ORM\Column(type: 'string', length: 64),
+        Assert\NotBlank(message: 'Vous devez saisir un mot de passe valide.', groups: ['create'])
+    ]
     private string $password;
 
     #[
         ORM\Column(type: 'string', length: 60, unique: true),
-        Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur.'),
-        Assert\Email(message: 'Le format de l\'adresse n\'est pas correcte.')
+        Assert\NotBlank(message: 'Vous devez saisir un adresse email.', groups: ['create','edit']),
+        Assert\Email(message: 'Le format de l\'adresse n\'est pas correcte.', groups: ['create','edit']),
     ]
-    private string $email;
+    private ?string $email;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
     private $tasks;
@@ -48,7 +52,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $created_at;
 
-    #[ORM\Column(type: 'json')]
+    #[
+        ORM\Column(type: 'json'),
+        Assert\NotBlank(message: 'Le choix d\'un rôle est requis', groups: ['create', 'edit'])
+    ]
     private array $roles = [];
 
 
@@ -77,14 +84,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername($username)
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -105,19 +114,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword($password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function eraseCredentials()

@@ -18,7 +18,7 @@ class TaskController extends AbstractController
     public function listAction(ManagerRegistry $managerRegistry): Response
     {
         return $this->render('task/list.html.twig',
-            ['tasks' => $managerRegistry->getRepository('App:Task')->findAll(),
+            ['tasks' => $managerRegistry->getRepository('App:Task')->findBy(array('isDone' => false)),
                 'isDone' => false]);
     }
 
@@ -34,10 +34,10 @@ class TaskController extends AbstractController
     public function createAction(ManagerRegistry $managerRegistry, Request $request): RedirectResponse|Response
     {
         $task = new Task();
+        $user = $this->getUser();
+        $task->setUser($user);
 
         $this->denyAccessUnlessGranted('create', $task);
-
-        $user = $this->getUser();
 
         $form = $this->createForm(TaskType::class, $task, [
             'validation_groups' => ['create']
@@ -52,7 +52,7 @@ class TaskController extends AbstractController
             $em->persist($task);
             $em->flush();
 
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+            $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
         }

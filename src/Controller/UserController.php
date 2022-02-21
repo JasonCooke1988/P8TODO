@@ -24,7 +24,9 @@ class UserController extends AbstractController
     #[Route('/users/{id}/edit', name: 'user_edit')]
     public function editAction(User $user, Request $request, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $managerRegistry): RedirectResponse|Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,
+            ['validation_groups' => ['edit']
+            ]);
 
         $form->handleRequest($request);
 
@@ -49,10 +51,11 @@ class UserController extends AbstractController
     public function createAction(Request $request, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $managerRegistry): RedirectResponse|Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,
+            ['validation_groups' => ['create']
+            ]);
 
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
 

@@ -8,16 +8,16 @@
         <a href="{{ path('task_create') }}" class="btn btn-info">Créer une tâche</a>
     {% endif %}
     {% if isDone %}
-        <a href="{{ path('task_list') }}" class="btn btn-info mx-2">Consulter la liste des tâches</a>
+        <a href="{{ path('task_list') }}" class="btn btn-info mx-2">Consulter la liste des tâches à faire</a>
     {% else %}
         <a href="{{ path('task_done_list') }}" class="btn btn-secondary mx-2">Consulter la liste des tâches
             terminées</a>
     {% endif %}
     <div class="row mt-4">
         {% for task in tasks %}
-            <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="col-sm-4 col-lg-4 col-md-4 my-2">
 
-                <div class="card">
+                <div class="task-card card">
                     <div class="card-body">
 
                         <div class="card-title d-flex justify-content-between">
@@ -59,7 +59,7 @@
 
             {% if isDone %}
                 <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
-                    <p>Il n'y a pas encore de tâche terminée enregistrée.</p>
+                    <p>Il n'y a pas encore de tâches terminées enregistrées.</p>
                 </div>
             {% else %}
                 <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
