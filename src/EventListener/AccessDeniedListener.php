@@ -15,7 +15,7 @@ class AccessDeniedListener implements EventSubscriberInterface
 
     protected int $count = 0;
 
-    protected string $authMessage = 'Vous n’est pas autorisée ';
+    protected string $authMessage = 'Vous n’est pas autorisée';
 
     protected array $uriMessage = array(
         'tasks-delete' => 'à supprimer cette tâche',
@@ -73,6 +73,7 @@ class AccessDeniedListener implements EventSubscriberInterface
                 $flashMessage = $this->authMessage . $this->uriMessage[$uri_segments[1] . '-' . str_replace('?','',end($uri_segments))];
             }
         }
+
         $event->setResponse(new RedirectResponse($returnUri));
         $request->getSession()->getFlashBag()->add('error', $flashMessage);
     }

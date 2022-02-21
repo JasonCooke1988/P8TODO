@@ -24,13 +24,13 @@ class Task
         ORM\Column(type: 'string'),
         Assert\NotBlank(message: 'Vous devez saisir un titre.', groups: ['create', 'edit'])
     ]
-    private string $title;
+    private ?string $title;
 
     #[
         ORM\Column(type: 'text'),
         Assert\NotBlank(message: 'Vous devez saisir du contenu.', groups: ['create', 'edit'])
     ]
-    private string $content;
+    private ?string $content;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isDone;
@@ -57,9 +57,11 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function getTitle(): string
@@ -70,6 +72,7 @@ class Task
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -81,6 +84,7 @@ class Task
     public function setContent(?string $content): self
     {
         $this->content = $content;
+
         return $this;
     }
 
