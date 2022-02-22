@@ -3,23 +3,15 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @codeCoverageIgnore
  */
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
-
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
-    }
 
     public function load(ObjectManager $manager): void
     {

@@ -57,7 +57,7 @@ class TaskVoter extends Voter
             case self::DELETE || self::EDIT:
                 return $this->canEdit($task, $user);
             case self::CREATE || self::TOGGLE:
-                return $user instanceof User;
+                return true;
         }
 
         throw new \LogicException('This code should not be reached!');

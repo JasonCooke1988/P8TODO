@@ -105,9 +105,9 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted('delete', $task);
 
-        $em = $managerRegistry->getManager();
-        $em->remove($task);
-        $em->flush();
+        $entityManager = $managerRegistry->getManager();
+        $entityManager->remove($task);
+        $entityManager->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
