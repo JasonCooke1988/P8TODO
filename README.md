@@ -1,4 +1,4 @@
-TODO&CO
+#TODO&CO
 ========
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f58c223d3a8547aeaf7dcd841ec06681)](https://www.codacy.com/gh/JasonCooke1988/P8TODO/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JasonCooke1988/P8TODO&amp;utm_campaign=Badge_Grade)
@@ -75,11 +75,18 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/p8todo?serverVersion=5.7"
 #MAILER_URL=smtp://localhost:465?encryption=ssl&auth_mode=login&username=&password=
 ```
 
-You may also create a .env.test for 
+For PHPUnit testing you must create an .env.test.local declaring the database used for testing, it should look something like this :
+
+```bash
+DATABASE_URL="mysql://root:@127.0.0.1:3306/p8todo?serverVersion=5.7"
+```
 
 ##Setup
 
+To create the database used for testing, add the option ``--env=test`` to the end of the three doctrine commands :
+
 Use doctrine to create databases :
+
 `php bin/console doctrine:databse:create`
 
 migrate database :
@@ -91,6 +98,17 @@ and load data fixtures :
 `php bin/console doctrine:fixtures:load`
 
 ## Start project
+
+From terminal `symfony server:start`
+
+## Unit testing
+
+``./vendor/bin/phpunit`` : to execute all tests in suite.
+
+``./vendor/bin/phpunit tests/Form`` : to execute all tests in the form directory.
+
+``./vendor/bin/phpunit tests/Controller/TaskController.php`` : to execute all tests in TaskController class.
+
 
 From terminal `symfony server:start`
 
@@ -112,11 +130,10 @@ From terminal `symfony server:start`
 Two user accounts have been created with doctrine data fixtures, you can connect with these credentials :
 
 (This is the default user assigned to unassigned tasks)
-Email : anon@test.com
-Pass : test
 
-Email : test@test.com
-Pass : test
+**Email : anon@test.com - Password : test**
+
+**Email : test@test.com - Password : test**
 
 Or you can create your own account.
 
