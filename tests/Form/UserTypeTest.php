@@ -2,12 +2,13 @@
 
 namespace App\Tests\Form;
 
-use App\Entity\Task;
 use App\Entity\User;
-use App\Form\TaskType;
 use App\Form\UserType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * @covers \App\Form\UserType
+ */
 class UserTypeTest extends TypeTestCase
 {
     protected function setUp(): void

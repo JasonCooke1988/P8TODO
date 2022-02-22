@@ -10,6 +10,9 @@ use App\Repository\UserRepository;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\TaskController
+ */
 class TaskControllerTest extends WebTestCase
 {
 
@@ -30,6 +33,10 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @dataProvider connectionDataProviders
+     * @covers \App\Controller\TaskController::createAction
+     * @covers \App\Controller\TaskController::editAction
+     * @covers \App\Controller\TaskController::toggleTaskAction
+     * @covers \App\Controller\TaskController::deleteTaskAction
      */
     public function testNotConnected($uri): void
     {
@@ -48,6 +55,10 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @dataProvider connectionDataProviders
+     * @covers \App\Controller\TaskController::createAction
+     * @covers \App\Controller\TaskController::editAction
+     * @covers \App\Controller\TaskController::toggleTaskAction
+     * @covers \App\Controller\TaskController::deleteTaskAction
      */
     public function testConnected($uri, $redirect = false): void
     {
@@ -73,6 +84,9 @@ class TaskControllerTest extends WebTestCase
         ];
     }
 
+    /**
+     * @covers \App\Controller\TaskController::listAction
+     */
     public function testListAction(): void
     {
         $client = static::createClient();
@@ -82,6 +96,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertCount($taskCount, $crawler->filter('.task-card'));
     }
 
+    /**
+     * @covers \App\Controller\TaskController::listDoneAction
+     */
     public function testListDoneAction(): void
     {
         $client = static::createClient();
@@ -91,6 +108,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertCount($taskCount, $crawler->filter('.task-card'));
     }
 
+    /**
+     * @covers \App\Controller\TaskController::createAction
+     */
     public function testCreateAction(): void
     {
         $client = static::createClient();
@@ -116,6 +136,7 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @dataProvider taskCreateEditActionValidationErrorsProvider
+     * @covers \App\Controller\TaskController::createAction
      */
     public function testCreateActionValidationErrors(string $title, string $content)
     {
@@ -137,7 +158,6 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('.invalid-feedback');
     }
 
-
     #[ArrayShape(['Blank title or content' => "string[]", 'Blank content' => "string[]", 'Blank title' => "string[]"])]
     public function taskCreateEditActionValidationErrorsProvider(): array
     {
@@ -148,6 +168,9 @@ class TaskControllerTest extends WebTestCase
         ];
     }
 
+    /**
+     * @covers \App\Controller\TaskController::editAction
+     */
     public function testEditAction()
     {
         $client = static::createClient();
@@ -173,6 +196,7 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @dataProvider taskCreateEditActionValidationErrorsProvider
+     * @covers \App\Controller\TaskController::editAction
      */
     public function testEditActionValidationErrors(string $title, string $content)
     {
@@ -194,7 +218,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('.invalid-feedback');
     }
 
-
+    /**
+     * @covers \App\Controller\TaskController::toggleTaskAction
+     */
     public function testToggleTaskAction()
     {
         $client = static::createClient();
@@ -221,6 +247,9 @@ class TaskControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * @covers \App\Controller\TaskController::deleteTaskAction
+     */
     public function testDeleteTaskAction()
     {
         $client = static::createClient();

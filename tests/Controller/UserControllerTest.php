@@ -7,6 +7,9 @@ use App\Repository\UserRepository;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\UserController
+ */
 class UserControllerTest extends WebTestCase
 {
 
@@ -21,9 +24,11 @@ class UserControllerTest extends WebTestCase
         $this->testUser = $this->userRepository->findOneBy(array('email' => 'anon@test.com'));
     }
 
-
     /**
      * @dataProvider connectionTestDataProviders
+     * @covers \App\Controller\UserController::listAction
+     * @covers \App\Controller\UserController::createAction
+     * @covers \App\Controller\UserController::editAction
      */
     public function testNotConnected($uri): void
     {
@@ -40,18 +45,11 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorTextContains('.alert-danger', 'Vous n’est pas autorisée');
     }
 
-    #[ArrayShape(['User list' => "string[]", 'User create' => "string[]", 'User edit' => "string[]"])]
-    public function connectionTestDataProviders(): array
-    {
-        return [
-            'User list' => ['/users'],
-            'User create' => ['/users/create'],
-            'User edit' => ['/users/' . $this->testUser->getId() . '/edit']
-        ];
-    }
-
     /**
      * @dataProvider connectionTestDataProviders
+     * @covers \App\Controller\UserController::listAction
+     * @covers \App\Controller\UserController::createAction
+     * @covers \App\Controller\UserController::editAction
      */
     public function testConnected($uri): void
     {
@@ -66,6 +64,19 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
+    #[ArrayShape(['User list' => "string[]", 'User create' => "string[]", 'User edit' => "string[]"])]
+    public function connectionTestDataProviders(): array
+    {
+        return [
+            'User list' => ['/users'],
+            'User create' => ['/users/create'],
+            'User edit' => ['/users/' . $this->testUser->getId() . '/edit']
+        ];
+    }
+
+    /**
+     * @covers \App\Controller\UserController::createAction
+     */
     public function testCreateAction(): void
     {
         $client = static::createClient();
@@ -91,6 +102,9 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorTextContains('.alert-success', 'L\'utilisateur a bien été ajouté.');
     }
 
+    /**
+     * @covers \App\Controller\UserController::editAction
+     */
     public function testEditAction()
     {
         $client = static::createClient();
@@ -120,6 +134,7 @@ class UserControllerTest extends WebTestCase
 
     /**
      * @dataProvider userCreateActionValidationErrorsProvider
+     * @covers \App\Controller\UserController::createAction
      */
     public function testCreateActionValidationErrors(string $username, string $firstPassword, string $secondPassword, array $roles, string $email)
     {
@@ -171,6 +186,7 @@ class UserControllerTest extends WebTestCase
 
     /**
      * @dataProvider userEditActionValidationErrorsProvider
+     * @covers \App\Controller\UserController::editAction
      */
     public function testEditActionValidationErrors(string $username, string $firstPassword, string $secondPassword, array $roles, string $email)
     {
