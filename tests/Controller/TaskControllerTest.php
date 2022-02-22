@@ -20,7 +20,6 @@ class TaskControllerTest extends WebTestCase
     private ?object $taskRepository;
     private User $testUser;
     private Task $testTask;
-    private ?object $em;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {

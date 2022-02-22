@@ -59,7 +59,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $managerRegistry->getManager();
+            $entityManager = $managerRegistry->getManager();
             $password = $passwordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
@@ -67,8 +67,8 @@ class UserController extends AbstractController
             $user->setPassword($password);
             $user->setCreatedAt(new \DateTimeImmutable());
 
-            $em->persist($user);
-            $em->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
