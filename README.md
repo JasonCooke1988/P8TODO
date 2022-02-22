@@ -30,7 +30,13 @@ composer install
 Use the package manager [npm](https://www.npmjs.com/) to install the projects JS dependencies.
 
 ```bash
-npm/yarn install
+npm install
+```
+
+and also to generate Webpack (Symfony Encore) files
+
+```bash
+npm run build
 ```
 
 Create a .env file and define the constants (except APP and APP_SECRET), the following is an example of a full .env file:
@@ -56,17 +62,13 @@ APP_ENV=dev
 APP_SECRET=appsecret
 ###< symfony/framework-bundle ###
 
-###> symfony/mailer ###
-MAILER_DSN=smtp://user:pass@smtp.example.com:port
-###< symfony/mailer ###
-
 ###> doctrine/doctrine-bundle ###
 # Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 # IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
 #
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
-DATABASE_URL="mysql://root:@127.0.0.1:3306/p6_snow_tricks?serverVersion=mariadb-10.4.10&charset=utf8"
+DATABASE_URL="mysql://root:@127.0.0.1:3306/p8todo?serverVersion=5.7"
 ###< doctrine/doctrine-bundle ###
 
 # use this to configure a traditional SMTP server
