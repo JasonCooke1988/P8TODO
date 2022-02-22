@@ -7,6 +7,9 @@ use App\Entity\User;
 use App\Form\TaskType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * @covers \App\Form\TaskType
+ */
 class TaskTypeTest extends TypeTestCase
 {
 
