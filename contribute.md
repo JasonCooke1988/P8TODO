@@ -19,3 +19,10 @@ Push changes to remote dev branch ``git push``
 
 Go to repository page : https://github.com/JasonCooke1988/P8TODO
 
+Click "Compare & pull request", if no merge conflicts have been detected you may write some information in commit 
+title and comment and click "Create pull request".
+
+If there are any issues that can be closed with the changes made in the merge then link corresponding issues
+by selecting them from "Linked issues" on the right.
+
+Your merge request shall then be reviewed by a peer.
