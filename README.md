@@ -1,3 +1,4 @@
+
 #TODO&CO
 ========
 
@@ -39,7 +40,7 @@ and also to generate Webpack (Symfony Encore) files
 npm run build
 ```
 
-Create a .env file and define the constants (except APP and APP_SECRET), the following is an example of a full .env file:
+Create a .env file and define the DATABASE_URL constant, the following is an example of a full .env file:
 
 ```bash
 # In all environments, the following files are loaded if they exist,
@@ -129,8 +130,7 @@ From terminal `symfony server:start`
 
 Two user accounts have been created with doctrine data fixtures, you can connect with these credentials :
 
-(This is the default user assigned to unassigned tasks)
-
+(First is the default user assigned to unassigned tasks)  
 **Email : anon@test.com - Password : test**
 
 **Email : test@test.com - Password : test**

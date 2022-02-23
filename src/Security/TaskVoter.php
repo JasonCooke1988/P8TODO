@@ -48,7 +48,6 @@ class TaskVoter extends Voter
             return false;
         }
 
-
         // you know $subject is a Task object, thanks to `supports()`
         /** @var Task $task */
         $task = $subject;
