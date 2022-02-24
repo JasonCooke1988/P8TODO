@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\DefaultController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**

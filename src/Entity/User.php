@@ -11,9 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @codeCoverageIgnore
- */
 #[
     ORM\Table('user'),
     ORM\Entity(repositoryClass: 'App\Repository\UserRepository'),

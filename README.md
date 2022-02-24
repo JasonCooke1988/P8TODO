@@ -1,5 +1,5 @@
 
-#TODO&CO
+TODO&CO
 ========
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f58c223d3a8547aeaf7dcd841ec06681)](https://www.codacy.com/gh/JasonCooke1988/P8TODO/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JasonCooke1988/P8TODO&amp;utm_campaign=Badge_Grade)
@@ -102,7 +102,7 @@ and load data fixtures :
 
 From terminal `symfony server:start`
 
-## Unit testing
+## PHPUnit
 
 ``./vendor/bin/phpunit`` : to execute all tests in suite.
 
@@ -110,8 +110,9 @@ From terminal `symfony server:start`
 
 ``./vendor/bin/phpunit tests/Controller/TaskController.php`` : to execute all tests in TaskController class.
 
+Generated PHPUnit coverage in HTML format can be found in /tmp/report.
 
-From terminal `symfony server:start`
+To regenerate those files after implementing new tests : ``php ./vendor/bin/phpunit --coverage-html tmp/report``
 
 ## Structure
 
