@@ -26,7 +26,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/tmp/
 >>>>>>> origin/master
 
 ###> phpunit/phpunit ###
