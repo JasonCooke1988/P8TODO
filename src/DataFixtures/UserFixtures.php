@@ -37,7 +37,7 @@ class UserFixtures extends Fixture
                 'email' => 'test@test.com',
                 'password' => 'test',
                 'username' => 'Test',
-                'roles' => ['ROLE_USER'],
+                'roles' => ['ROLE_ADMIN'],
                 'reference' => self::TEST_USER_REFERENCE
             )
         );
