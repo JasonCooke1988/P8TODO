@@ -88,7 +88,7 @@ To create the database used for testing, add the option ``--env=test`` to the en
 
 Use doctrine to create databases :
 
-`php bin/console doctrine:databse:create`
+`php bin/console doctrine:database:create`
 
 migrate database :
 
@@ -104,15 +104,15 @@ From terminal `symfony server:start`
 
 ## PHPUnit
 
-``./vendor/bin/phpunit`` : to execute all tests in suite.
+``php ./vendor/bin/phpunit`` : to execute all tests in suite.
 
-``./vendor/bin/phpunit tests/Form`` : to execute all tests in the form directory.
+``php ./vendor/bin/phpunit tests/Form`` : to execute all tests in the form directory.
 
-``./vendor/bin/phpunit tests/Controller/TaskController.php`` : to execute all tests in TaskController class.
+``php ./vendor/bin/phpunit tests/Controller/TaskController.php`` : to execute all tests in TaskController class.
 
 Generated PHPUnit coverage in HTML format can be found in /tmp/report.
 
-To regenerate those files after implementing new tests : ``php ./vendor/bin/phpunit --coverage-html tmp/report``
+To regenerate those files after implementing new tests : ``php ./vendor/bin/phpunit --coverage-html docs/phpunit_couverture_de_code``
 
 ## Structure
 
