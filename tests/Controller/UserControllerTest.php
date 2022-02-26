@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -15,13 +16,20 @@ class UserControllerTest extends WebTestCase
 
     private ?object $userRepository;
 
+    private User $adminUser;
     private User $testUser;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
+
+        //        Get repositories
         $this->userRepository = static::getContainer()->get(UserRepository::class);
-        $this->testUser = $this->userRepository->findOneBy(array('email' => 'anon@test.com'));
+
+//        Get users
+        $this->adminUser = $this->userRepository->findOneBy(array('email' => 'admin@test.com'));
+        $this->testUser = $this->userRepository->findOneBy(array('email' => 'test@test.com'));
+
     }
 
     /**
@@ -56,7 +64,7 @@ class UserControllerTest extends WebTestCase
         self::ensureKernelShutdown();
         $client = static::createClient();
 
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
         $client->request('GET', $uri);
@@ -82,7 +90,7 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
 
         //        Connect user
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
         $crawler = $client->request('GET', '/users/create');
@@ -110,7 +118,7 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
 
         //        Connect user
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
         $crawler = $client->request('GET', '/users/' . $this->testUser->getId() . '/edit');
@@ -141,7 +149,7 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
 
         //        Connect user
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
         $crawler = $client->request('GET', '/users/create');
@@ -193,10 +201,10 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
 
         //        Connect user
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
-        $crawler = $client->request('GET', '/users/' . $this->testUser->getId() . '/edit');
+        $crawler = $client->request('GET', '/users/' . $this->adminUser->getId() . '/edit');
 
         //        Submit form
         $buttonCrawlerNode = $crawler->selectButton('Modifier');

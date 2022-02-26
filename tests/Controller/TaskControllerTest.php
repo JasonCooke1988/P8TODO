@@ -18,16 +18,28 @@ class TaskControllerTest extends WebTestCase
 
     private ?object $userRepository;
     private ?object $taskRepository;
+    private User $adminUser;
     private User $testUser;
+    private User $anonUser;
+    private Task $anonTask;
     private Task $testTask;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
+
+//        Get repositories
         $this->taskRepository = static::getContainer()->get(TaskRepository::class);
         $this->userRepository = static::getContainer()->get(UserRepository::class);
-        $this->testUser = $this->userRepository->findOneBy(array('email' => 'anon@test.com'));
-        $this->testTask = $this->taskRepository->findOneBy(array('title' => 'Tache N° 1'));
+
+//        Get users
+        $this->anonUser = $this->userRepository->findOneBy(array('email' => 'anon@test.com'));
+        $this->adminUser = $this->userRepository->findOneBy(array('email' => 'admin@test.com'));
+        $this->testUser = $this->userRepository->findOneBy(array('email' => 'test@test.com'));
+
+//        Get tasks
+        $this->anonTask = $this->taskRepository->findOneBy(array('user' => $this->anonUser));
+        $this->testTask = $this->taskRepository->findOneBy(array('user' => $this->testUser));
     }
 
     /**
@@ -78,8 +90,6 @@ class TaskControllerTest extends WebTestCase
         return [
             'Task create' => ['/tasks/create'],
             'Task edit' => ['/tasks/' . $this->testTask->getId() . '/edit'],
-            'Task toggle' => ['/tasks/' . $this->testTask->getId() . '/toggle', true],
-            'Task delete' => ['/tasks/' . $this->testTask->getId() . '/delete', true]
         ];
     }
 
@@ -142,7 +152,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createClient();
 
         //        Connect user
-        $client->loginUser($this->testUser);
+        $client->loginUser($this->adminUser);
 
         //        Go to page
         $crawler = $client->request('GET', '/tasks/create');
@@ -205,7 +215,7 @@ class TaskControllerTest extends WebTestCase
         $client->loginUser($this->testUser);
 
         //        Go to page
-        $crawler = $client->request('GET', '/tasks/' . $this->testTask->getId() . '/edit');
+        $crawler = $client->request('GET', '/tasks/' . $this->anonTask->getId() . '/edit');
 
         //        Submit form
         $buttonCrawlerNode = $crawler->selectButton('Modifier');
@@ -230,7 +240,7 @@ class TaskControllerTest extends WebTestCase
         //        Cast task original state into $isDone
         //        Fresh repo and entity are needed
         $taskRepository = static::getContainer()->get(TaskRepository::class);
-        $task = $taskRepository->findOneBy(array('title' => 'Tache N° 1'));
+        $task = $taskRepository->findOneBy(array('user' => $this->testUser));
         $isDone = $task->isDone();
         $status = !$isDone ? 'faite' : 'à faire';
 
@@ -249,7 +259,51 @@ class TaskControllerTest extends WebTestCase
     /**
      * @covers \App\Controller\TaskController::deleteTaskAction
      */
-    public function testDeleteTaskAction()
+    public function testDeleteTestTaskAsAdminAction()
+    {
+        $client = static::createClient();
+
+        //        Connect user
+        $client->loginUser($this->adminUser);
+
+        //        Get task ID
+        $taskId = $this->testTask->getId();
+
+        //        Delete task
+        $client->request('GET', '/tasks/' . $taskId . '/delete');
+        $client->followRedirect();
+
+        $this->assertSelectorTextContains('.alert-danger', 'Vous n’est pas autorisée');
+    }
+
+    /**
+     * @covers \App\Controller\TaskController::deleteTaskAction
+     */
+    public function testDeleteAnonTaskAsAdmin()
+    {
+        $client = static::createClient();
+
+        //        Connect user
+        $client->loginUser($this->adminUser);
+
+        //        Get task ID
+        $taskId = $this->anonTask->getId();
+
+        //        Delete task
+        $client->request('GET', '/tasks/' . $taskId . '/delete');
+
+        $client->followRedirect();
+
+        $this->assertSelectorTextContains(
+            '.alert.alert-success',
+            'La tâche a bien été supprimée.'
+        );
+    }
+
+    /**
+     * @covers \App\Controller\TaskController::deleteTaskAction
+     */
+    public function testDeleteOwnTask()
     {
         $client = static::createClient();
 
@@ -261,11 +315,31 @@ class TaskControllerTest extends WebTestCase
 
         //        Delete task
         $client->request('GET', '/tasks/' . $taskId . '/delete');
-        $client->followRedirect();
 
+        $client->followRedirect();
         $this->assertSelectorTextContains(
             '.alert.alert-success',
             'La tâche a bien été supprimée.'
         );
+    }
+
+    /**
+     * @covers \App\Controller\TaskController::deleteTaskAction
+     */
+    public function testDeleteAnonTaskAsTest()
+    {
+        $client = static::createClient();
+
+        //        Connect user
+        $client->loginUser($this->testUser);
+
+        //        Get task ID
+        $taskId = $this->anonTask->getId();
+
+        //        Delete task
+        $client->request('GET', '/tasks/' . $taskId . '/delete');
+
+        $client->followRedirect();
+        $this->assertSelectorTextContains('.alert-danger', 'Vous n’est pas autorisée');
     }
 }

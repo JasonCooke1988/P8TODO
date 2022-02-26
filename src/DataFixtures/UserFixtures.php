@@ -15,6 +15,7 @@ class UserFixtures extends Fixture
 
     private UserPasswordHasherInterface $passwordHasher;
     public const ANON_USER_REFERENCE = 'anon-user';
+    public const ADMIN_USER_REFERENCE = 'admin-user';
     public const TEST_USER_REFERENCE = 'test-user';
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
@@ -30,7 +31,7 @@ class UserFixtures extends Fixture
                 'email' => 'anon@test.com',
                 'password' => 'test',
                 'username' => 'Anon',
-                'roles' => ['ROLE_ADMIN'],
+                'roles' => ['ROLE_USER'],
                 'reference' => self::ANON_USER_REFERENCE
             ),
             array(
@@ -39,6 +40,13 @@ class UserFixtures extends Fixture
                 'username' => 'Test',
                 'roles' => ['ROLE_USER'],
                 'reference' => self::TEST_USER_REFERENCE
+            ),
+            array(
+                'email' => 'admin@test.com',
+                'password' => 'test',
+                'username' => 'Admin',
+                'roles' => ['ROLE_ADMIN'],
+                'reference' => self::ADMIN_USER_REFERENCE
             )
         );
 

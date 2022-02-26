@@ -16,7 +16,7 @@ class AccessDeniedListener implements EventSubscriberInterface
 
     protected int $count = 0;
 
-    protected string $authMessage = 'Vous n’est pas autorisée';
+    protected string $authMessage = 'Vous n’est pas autorisée ';
 
     protected array $uriMessage = array(
         'tasks-delete' => 'à supprimer cette tâche',
