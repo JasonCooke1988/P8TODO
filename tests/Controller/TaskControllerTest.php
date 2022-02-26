@@ -215,7 +215,7 @@ class TaskControllerTest extends WebTestCase
         $client->loginUser($this->testUser);
 
         //        Go to page
-        $crawler = $client->request('GET', '/tasks/' . $this->anonTask->getId() . '/edit');
+        $crawler = $client->request('GET', '/tasks/' . $this->testTask->getId() . '/edit');
 
         //        Submit form
         $buttonCrawlerNode = $crawler->selectButton('Modifier');

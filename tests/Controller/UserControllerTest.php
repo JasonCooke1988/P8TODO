@@ -135,7 +135,7 @@ class UserControllerTest extends WebTestCase
 
         //        Follow redirect
         $client->followRedirect();
-        $client->followRedirect();
+//        $client->followRedirect();
 //        dd($client->getResponse()->getContent());
         $this->assertSelectorTextContains('.alert-success', 'L\'utilisateur a bien été modifié');
     }
