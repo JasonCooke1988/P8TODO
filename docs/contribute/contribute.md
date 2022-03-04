@@ -24,15 +24,17 @@ l'application sera donc facilité.
 
 Voici quelques suggestions d’améliorations possibles :
 
-Mettre à jour le design graphique (responsive inclus)
-Intégrer un outil monitoring d’erreur tel que sentry Un log d’erreur
+Mettre à jour le design graphique (responsive inclus)  
+Intégrer un outil monitoring d’erreur tel que sentry Un log d’erreur  
 
 ###Fonctionnalités additionnelles :
 
-Un utilisateur peut supprimer son compte un administrateur peut supprimer tous les comptes (sauf l'utilisateur anonyme)
-Au moment de la suppression d'un compte toutes les tâches rattachées au compte supprimé seront assignées à l'utilisateur
-anonyme. Les tâches deviennent individuelles, un utilisateur peut seulement voir les tâches qu’ils ont créées. Ou bien
-introduire le concept d'équipes ou seuls les utilisateurs attachés à une équipe pourraient voir les tâches de
-l'équipe. Mettre également le nom d'utilisateur de la personne ayant créé la tâche.
+Un utilisateur peut supprimer son compte   
+Un administrateur peut supprimer tous les comptes (sauf l'utilisateur anonyme)  
+Au moment de la suppression d'un compte toutes les tâches rattachées au compte supprimé seront assignées à l'utilisateur anonyme.  
+Les tâches deviennent individuelles, un utilisateur peut seulement voir les tâches qu’ils ont créées. 
+Ou bien introduire le concept d'équipes ou seuls les utilisateurs attachés à une équipe pourraient voir les tâches de
+l'équipe.  
+Mettre également le nom d'utilisateur de la personne ayant créé la tâche.
 
 

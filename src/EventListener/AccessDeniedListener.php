@@ -14,8 +14,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class AccessDeniedListener implements EventSubscriberInterface
 {
 
-    protected int $count = 0;
-
     protected string $authMessage = 'Vous n’est pas autorisée ';
 
     protected array $uriMessage = array(
