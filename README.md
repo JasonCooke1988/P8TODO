@@ -110,7 +110,7 @@ From terminal `symfony server:start`
 
 ``php ./vendor/bin/phpunit tests/Controller/TaskController.php`` : to execute all tests in TaskController class.
 
-Generated PHPUnit coverage in HTML format can be found in /tmp/report.
+Generated PHPUnit coverage in HTML format can be found in /docs/phpunit_couverture_de_code.
 
 To regenerate those files after implementing new tests : ``php ./vendor/bin/phpunit --coverage-html docs/phpunit_couverture_de_code``
 

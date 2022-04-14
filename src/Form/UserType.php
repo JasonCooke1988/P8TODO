@@ -50,7 +50,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => ['create'],
+            'validation_groups' => ['create','edit'],
         ]);
     }
 }

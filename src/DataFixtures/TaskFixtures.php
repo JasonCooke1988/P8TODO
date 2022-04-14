@@ -19,19 +19,19 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             array(
                 'created_at' => new \DateTime(),
                 'title' => 'Tâche N° 1',
-                'content' => 'Ammener voiture au garage',
+                'content' => 'Amener voiture au garage',
                 'user_id' => $this->getReference(UserFixtures::ANON_USER_REFERENCE)
             ),
             array(
                 'created_at' => new \DateTime(),
                 'title' => 'Tâche N° 2',
-                'content' => 'Rendez-vous medecin',
+                'content' => 'Rendez-vous docteur',
                 'user_id' => $this->getReference(UserFixtures::ANON_USER_REFERENCE)
             ),
             array(
                 'created_at' => new \DateTime(),
                 'title' => 'Tâche N° 3',
-                'content' => 'Acheter : Liquide vaiselle, pain & fromage.',
+                'content' => 'Acheter : Liquide vaisselle, pain & fromage.',
                 'user_id' => $this->getReference(UserFixtures::ANON_USER_REFERENCE)
             ),
             array(
@@ -58,7 +58,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,
